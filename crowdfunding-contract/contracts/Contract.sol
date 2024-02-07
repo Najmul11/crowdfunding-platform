@@ -26,6 +26,7 @@ contract CrowdFunding {
 
     constructor(){
         platformOwner = payable(msg.sender);
+        platformFee=2;
     }
 
     modifier onlyEventCreator(uint256 eventId ){

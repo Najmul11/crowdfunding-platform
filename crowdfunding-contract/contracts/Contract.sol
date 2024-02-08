@@ -14,14 +14,23 @@ contract CrowdFunding {
         uint32 targetAmount;
         uint256 collectedAmount;
         address[] donators;
+        uint256 deadline; //  here using days
 
     }
 
     // collection of ell events
     CrowdFundingEvent[]  allEvents;
-    // to retrive specific event information
-    uint256 public eventCount; //this will help to retrieve spacific event info, its to index the events to mapping
+
+    //this will help to retrieve spacific event info, its to index the events to mapping
+    uint256 public eventCount; 
     mapping(uint256=>CrowdFundingEvent) public  events;
+
+
+    event NewEvent(string title, string description, uint256 targetAmount, address creator);
+    event Donate( uint256 amount, address donator, uint256 eventId, string title);
+    event Withdraw( uint256 amount, address eventCreator, uint256 eventId, string title);
+    event ChangeEventStatus(string message);
+    event NewPlatformFee( string message);
 
 
     constructor(){
@@ -30,7 +39,7 @@ contract CrowdFunding {
     }
 
     modifier onlyEventCreator(uint256 eventId ){
-        require(events[eventId].creator==msg.sender,"Oops you are not authrized");
+        require(events[eventId].creator==msg.sender,"Oops you are not authorized");
         _;
     }
     modifier onlyOwner {
@@ -40,8 +49,9 @@ contract CrowdFunding {
 
 
     // create an event
-    function createEvent( string memory _title,  string memory _description, string memory _bannerURL, uint32 _targetAmount) public  {
-        // storing the event info to mapping
+    function createEvent( string memory _title,  string memory _description, string memory _bannerURL, uint32 _targetAmount, uint256 _deadline) public  {
+        require(_deadline>block.timestamp + 1 days,"Deadline should be  a future date.");
+
         CrowdFundingEvent memory eventInformation ;
 
         eventInformation.creator=msg.sender;
@@ -50,6 +60,7 @@ contract CrowdFunding {
         eventInformation.description=_description;
         eventInformation.targetAmount=_targetAmount;
         eventInformation.status=true;
+        eventInformation.deadline=block.timestamp + (_deadline + 1 days);
      
 
 
@@ -59,24 +70,33 @@ contract CrowdFunding {
         allEvents.push(eventInformation);
         eventCount++;
 
+        emit NewEvent(_title, _description, _targetAmount, msg.sender);
+
     }
 
-
-    function sendFundToEvent(uint256 eventId) public payable {//eventId will be the index retrieved from allEvents
+     //eventId will be the index retrieved from allEvents
+    function sendFundToEvent(uint256 eventId) public payable {
 
         CrowdFundingEvent storage targetEvent = events[eventId] ;
-        require(targetEvent.status, "Not accepting anymore donation.");
+        require(targetEvent.status, "We are not accepting donation at this point");
+        require(targetEvent.targetAmount>targetEvent.collectedAmount, "Target Amount Reached");
+        require(targetEvent.deadline<block.timestamp, "Deadline exceeds!");
+        
 
-        targetEvent.collectedAmount=msg.value;
+        targetEvent.collectedAmount +=msg.value;
         targetEvent.donators.push(msg.sender);
 
         // now  update the event in allEvents array
         allEvents[eventId]=targetEvent;
 
+        emit Donate(msg.value, msg.sender, eventId, targetEvent.title);
+
     }
 
     function withdrawRaisedFund(uint256 eventId)public  onlyEventCreator(eventId)  {
         CrowdFundingEvent memory targetEvent = events[eventId];
+
+        require(targetEvent.collectedAmount>0, "No Balance to withdraw");
 
         uint256 fee = (targetEvent.collectedAmount *platformFee)/100;
         uint256 balanceAvailableToWithdraw = (targetEvent.collectedAmount) - (targetEvent.collectedAmount *platformFee)/100 ;
@@ -86,38 +106,49 @@ contract CrowdFunding {
         require(sent, "Withdrawal failed. Try later");
         platformOwner.transfer(fee);
 
+
+        emit Withdraw(balanceAvailableToWithdraw, targetEvent.creator, eventId, targetEvent.title);
+
     }
+
+     // event creator can only set status to false
+    function changeEventStatus(uint256 eventId) public onlyEventCreator(eventId){
+        CrowdFundingEvent storage targetEvent = events[eventId] ;
+        require(targetEvent.status, "Event is not live");
+        targetEvent.status=false;
+
+        emit ChangeEventStatus("Event status changed");
+
+    }
+
+    // platform owner can change status  to true /false
+    function controlEventStatus(uint256 eventId) public onlyOwner{
+        CrowdFundingEvent storage targetEvent = events[eventId] ;
+        targetEvent.status=!false;
+
+        emit ChangeEventStatus("Event status changed");
+
+    }
+
 
     // retrieve allEvents 
     function getAllEvents()public view returns(CrowdFundingEvent[] memory ){
         return allEvents;
     }
 
+    // get contract balance
+    function getBalance() public view returns(uint256) {
+        return address(this).balance;
+    }
 
-    // function to catch ether directly sent to the CA
-    receive() external payable{} // we need to store what amount is sent to the CA . this is not needed. A way to get some money for the platform owner mistakenly sent to the contract address directly. owner can take all / or have functionality to return amount if anyone claim for that amount
+
+    receive() external payable{} 
+
+    function setPlatformFee(uint256 _platformFee) public onlyOwner{
+        platformFee = _platformFee;
+
+        emit NewPlatformFee("New platform fee is set by owner");
+    }
 }
 
 
-
-
-
-// --------------- thing to implement------------
-/** 
-1 reqiure statments to functions
-2 set deadline  for events
-3 user can create event , status of the event will be false
-    1 when status false , cant send fund to that event 
-    2 after event creation, platform owner will approve the events  changing status to true
-
-4. need to put condition in withdrawing
-    1 status needs to be fasle to withdraw 
-    2 must have balance
-
-5. platform owner and eventcreator will have ability to conclude an event before reaching target or deadline making status false
-    platform owner can set status true /false both,event creator can only set to false
-
-6 events 
-7 fn to set platformFee (platfom owner)
-
- */

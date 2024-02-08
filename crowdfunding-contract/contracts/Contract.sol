@@ -42,7 +42,7 @@ contract CrowdFunding {
         require(events[eventId].creator==msg.sender,"Oops you are not authorized");
         _;
     }
-    modifier onlyOwner {
+    modifier onlyOwner (){
         require(msg.sender==platformOwner);
         _;
     }
@@ -94,7 +94,7 @@ contract CrowdFunding {
     }
 
     function withdrawRaisedFund(uint256 eventId)public  onlyEventCreator(eventId)  {
-        CrowdFundingEvent memory targetEvent = events[eventId];
+        CrowdFundingEvent storage targetEvent = events[eventId];
 
         require(targetEvent.collectedAmount>0, "No Balance to withdraw");
 
@@ -122,7 +122,7 @@ contract CrowdFunding {
     }
 
     // platform owner can change status  to true /false
-    function controlEventStatus(uint256 eventId) public onlyOwner{
+    function controlEventStatus(uint256 eventId) public onlyOwner(){
         CrowdFundingEvent storage targetEvent = events[eventId] ;
         targetEvent.status=!false;
 
@@ -144,13 +144,15 @@ contract CrowdFunding {
 
     receive() external payable{} 
 
-    function setPlatformFee(uint256 _platformFee) public onlyOwner{
+    function setPlatformFee(uint256 _platformFee) public onlyOwner() {
         platformFee = _platformFee;
-
         emit NewPlatformFee("New platform fee is set by owner");
+
     }
 }
 
-// 0xCC3a3064733C31D8a33c1039710eb194d8635eE3                remix
 
+
+
+// setPlatformFee , controlEventStatus, controlEventStatus these functions not working as expected
 

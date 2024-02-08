@@ -11,7 +11,7 @@ contract CrowdFunding {
         string bannerURL;
         string description;
         bool status;
-        uint32 targetAmount;
+        uint256 targetAmount;
         uint256 collectedAmount;
         address[] donators;
         uint256 deadline; //  here using days
@@ -49,8 +49,8 @@ contract CrowdFunding {
 
 
     // create an event
-    function createEvent( string memory _title,  string memory _description, string memory _bannerURL, uint32 _targetAmount, uint256 _deadline) public  {
-        require(_deadline>block.timestamp + 1 days,"Deadline should be  a future date.");
+    function createEvent( string memory _title,  string memory _description, string memory _bannerURL, uint256 _targetAmount, uint256 _deadline) public  {
+        require((_deadline *1 days) + block.timestamp >block.timestamp,"Deadline should be  a future date.");
 
         CrowdFundingEvent memory eventInformation ;
 
@@ -58,9 +58,9 @@ contract CrowdFunding {
         eventInformation.title=_title;
         eventInformation.bannerURL=_bannerURL;
         eventInformation.description=_description;
-        eventInformation.targetAmount=_targetAmount;
+        eventInformation.targetAmount=_targetAmount * 1 ether;
         eventInformation.status=true;
-        eventInformation.deadline=block.timestamp + (_deadline + 1 days);
+        eventInformation.deadline=block.timestamp + (_deadline * 1 days);
      
 
 
@@ -78,9 +78,9 @@ contract CrowdFunding {
     function sendFundToEvent(uint256 eventId) public payable {
 
         CrowdFundingEvent storage targetEvent = events[eventId] ;
-        require(targetEvent.status, "We are not accepting donation at this point");
+        require(targetEvent.status, "Event is not liveat the moment");
         require(targetEvent.targetAmount>targetEvent.collectedAmount, "Target Amount Reached");
-        require(targetEvent.deadline<block.timestamp, "Deadline exceeds!");
+        require(targetEvent.deadline>block.timestamp, "Deadline exceeds!");
         
 
         targetEvent.collectedAmount +=msg.value;
@@ -150,5 +150,7 @@ contract CrowdFunding {
         emit NewPlatformFee("New platform fee is set by owner");
     }
 }
+
+// 0xCC3a3064733C31D8a33c1039710eb194d8635eE3                remix
 
 

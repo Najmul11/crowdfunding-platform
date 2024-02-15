@@ -14,6 +14,7 @@ contract CrowdFunding {
         uint256 targetAmount;
         uint256 collectedAmount;
         address[] donators;
+        uint256[] donations;
         uint256 deadline; //  here using days
 
     }
@@ -43,7 +44,7 @@ contract CrowdFunding {
         _;
     }
     modifier onlyOwner (){
-        require(msg.sender==platformOwner);
+        require(msg.sender==platformOwner, "You are not authorized");
         _;
     }
 
@@ -59,7 +60,7 @@ contract CrowdFunding {
         eventInformation.bannerURL=_bannerURL;
         eventInformation.description=_description;
         eventInformation.targetAmount=_targetAmount * 1 ether;
-        eventInformation.status=true;
+        eventInformation.status=false;
         eventInformation.deadline=block.timestamp + (_deadline * 1 days);
      
 
@@ -78,13 +79,14 @@ contract CrowdFunding {
     function sendFundToEvent(uint256 eventId) public payable {
 
         CrowdFundingEvent storage targetEvent = events[eventId] ;
-        require(targetEvent.status, "Event is not liveat the moment");
+        require(targetEvent.status, "Event is not live at the moment");
         require(targetEvent.targetAmount>targetEvent.collectedAmount, "Target Amount Reached");
         require(targetEvent.deadline>block.timestamp, "Deadline exceeds!");
         
 
         targetEvent.collectedAmount +=msg.value;
         targetEvent.donators.push(msg.sender);
+        targetEvent.donations.push(msg.value);
 
         // now  update the event in allEvents array
         allEvents[eventId]=targetEvent;
@@ -124,7 +126,7 @@ contract CrowdFunding {
     // platform owner can change status  to true /false
     function controlEventStatus(uint256 eventId) public onlyOwner(){
         CrowdFundingEvent storage targetEvent = events[eventId] ;
-        targetEvent.status=!false;
+        targetEvent.status=!targetEvent.status;
 
         emit ChangeEventStatus("Event status changed");
 
@@ -142,7 +144,7 @@ contract CrowdFunding {
     }
 
 
-    receive() external payable{} 
+    // receive() external payable{} 
 
     function setPlatformFee(uint256 _platformFee) public onlyOwner() {
         platformFee = _platformFee;
@@ -150,9 +152,3 @@ contract CrowdFunding {
 
     }
 }
-
-
-
-
-// setPlatformFee , controlEventStatus, controlEventStatus these functions not working as expected
-

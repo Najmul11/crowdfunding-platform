@@ -1,6 +1,6 @@
 import Image from "next/image";
-import logo from "../../public/logo.png";
 import Link from "next/link";
+import { DollarSign, Receipt } from "lucide-react";
 
 const Header = () => {
   return (
@@ -9,8 +9,9 @@ const Header = () => {
         <div className="flex  justify-between items-center ">
           <Link
             href={"/"}
-            className="font-bold uppercase text-2xl bg-clip-text text-transparent bg-gradient-to-r from-highlight to-white"
+            className="flex items-center  font-bold uppercase text-xl bg-clip-text text-transparent bg-gradient-to-r from-highlight to-white"
           >
+            <Receipt className="text-highlight font-bold" size={30} />
             Fund Forge
           </Link>
 
@@ -21,10 +22,7 @@ const Header = () => {
             >
               How it works?
             </Link>
-            <Link
-              href={"/how-it-works"}
-              className="hover:text-highlight duration-300"
-            >
+            <Link href={"/about"} className="hover:text-highlight duration-300">
               About us
             </Link>
 

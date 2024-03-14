@@ -18,6 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "bg-black")}>
+<<<<<<< Updated upstream
+=======
+        <Header />
+
+>>>>>>> Stashed changes
         <main className="min-h-screen">{children}</main>
       </body>
     </html>

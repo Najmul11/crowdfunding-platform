@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { DollarSign, Receipt } from "lucide-react";
+import { Receipt } from "lucide-react";
 
 const Header = () => {
   return (

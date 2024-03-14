@@ -20,6 +20,7 @@ const config = {
     extend: {
       colors: {
         highlight: "#69FA8B",
+        second: "rgb(255 255 255 / 0.8);",
       },
       keyframes: {
         "accordion-down": {

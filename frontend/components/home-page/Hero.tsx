@@ -1,8 +1,8 @@
 const Hero = () => {
   return (
-    <div className="text-second flex flex-col items-center justify-center h-[70vh] ">
-      <div>
-        <span className="text-sm bg-blue-500/40 font-semibold px-2 py-[3px] rounded-full animate-pulse">
+    <div className="text-second   w-full flex flex-col items-center justify-center h-[70vh] ">
+      <div className=" ">
+        <span className="text-sm bg-blue-500/40 font-semibold px-2 py-[3px] rounded-full ">
           Join •
         </span>
         <div className="flex flex-col items-center gap-5">

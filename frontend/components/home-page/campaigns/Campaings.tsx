@@ -1,6 +1,7 @@
 "use client";
 import { useContractRead, useContract } from "@thirdweb-dev/react";
 import Card from "./Card";
+import CardSkeleton from "./CardSkeleton";
 
 export type TCampaign = (string | number | boolean)[];
 
@@ -9,18 +10,22 @@ const Campaings = () => {
     "0xBA69a8fcA948270b18d268e248FF53971bEC4f0E"
   );
   const { data, isLoading, error } = useContractRead(contract, "getAllEvents");
-  console.log(data);
+  //   const liveCam = data?.filter((p) => p[4]);
 
   return (
     <div>
       <div className="flex">
-        <h3 className="text-xl font-bold bg-blue-500/30 py-1 px-5 rounded-full">
+        <h3 className="text-lg font-bold bg-blue-500/30 py-1 px-5 rounded-full">
           Live Campaigns
         </h3>
       </div>
 
       {isLoading ? (
-        <></>
+        <div className="grid grid-cols-3 gap-5 mt-20">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
       ) : (
         <>
           {data && data.length > 0 ? (

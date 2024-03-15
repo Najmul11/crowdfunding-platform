@@ -14,7 +14,7 @@ const Hero = () => {
             Extend <br /> a Helping Hand to Those in Need.
           </p>
           <button className="rounded-full bg-highlight  font-semibold px-5 py-2  hover:bg-highlight/90 text-black duration-300">
-            Explore campaigns
+            Create campaign
           </button>
         </div>
       </div>

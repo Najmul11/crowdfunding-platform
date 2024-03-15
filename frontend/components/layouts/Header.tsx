@@ -15,20 +15,14 @@ const Header = () => {
           </Link>
 
           <div className="flex gap-5 items-center text-white font-semibold text-sm ">
-            <Link
-              href={"/how-it-works"}
-              className="hover:text-highlight duration-300"
-            >
-              How it works?
-            </Link>
             <Link href={"/about"} className="hover:text-highlight duration-300">
               About us
             </Link>
 
             <div className="flex gap-1 items-center">
-              <button className="rounded bg-blue-500/50 px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
+              {/* <button className="rounded bg-blue-500/50 px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
                 Create campaign
-              </button>
+              </button> */}
 
               <button className="rounded bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
                 Donate now

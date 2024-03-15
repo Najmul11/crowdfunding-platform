@@ -1,12 +1,11 @@
 import Hero from "@/components/home-page/Hero";
-import Slider from "@/components/home-page/Slider";
-import React from "react";
+import Campaings from "@/components/home-page/campaigns/Campaings";
 
 const HomePage = () => {
   return (
     <div className="max-w-screen-xl mx-auto">
       <Hero />
-      <Slider />
+      <Campaings />
     </div>
   );
 };

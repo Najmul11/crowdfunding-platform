@@ -149,6 +149,5 @@ contract CrowdFunding {
     function setPlatformFee(uint256 _platformFee) public onlyOwner() {
         platformFee = _platformFee;
         emit NewPlatformFee("New platform fee is set by owner");
-
     }
 }

@@ -1,6 +1,3 @@
-import Image from "next/image";
-import banner from "../../public/banner.jpg";
-
 const Hero = () => {
   return (
     <div className="text-second flex flex-col items-center justify-center h-[70vh] ">

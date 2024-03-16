@@ -2,8 +2,14 @@
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { TCampaign } from "./Campaings";
+import Link from "next/link";
 
-const Card = ({ campaign }: { campaign: TCampaign }) => {
+type TProps = {
+  campaign: TCampaign;
+  index: number;
+};
+
+const Card = ({ campaign, index }: TProps) => {
   return (
     <CardContainer className="inter-var">
       <CardBody className="bg-blue-500/30 relative group/cardw-auto  h-auto rounded-xl p-6 text-second  ">
@@ -33,9 +39,12 @@ const Card = ({ campaign }: { campaign: TCampaign }) => {
             as="button"
             className="rounded-xl font-bold"
           >
-            <button className="rounded text-xs bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
+            <Link
+              href={`/campaigns/${index}`}
+              className="rounded text-xs bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300"
+            >
               Donate
-            </button>
+            </Link>
           </CardItem>
         </div>
       </CardBody>

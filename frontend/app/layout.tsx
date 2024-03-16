@@ -20,7 +20,7 @@ export default function RootLayout({
     <Thirdweb>
       <html lang="en">
         <body className={cn(inter.className, "bg-black text-second")}>
-          <main className="min-h-screen">{children}</main>
+          <main className="">{children}</main>
         </body>
       </html>
     </Thirdweb>

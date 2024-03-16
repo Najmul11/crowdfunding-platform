@@ -32,9 +32,9 @@ const Campaings = () => {
             <div className="grid grid-cols-3 gap-5 ">
               {data.map((campaign: TCampaign, i: number) => (
                 <>
-                  <Card campaign={campaign} key={i} />
-                  <Card campaign={campaign} key={i} />
-                  <Card campaign={campaign} key={i} />
+                  <Card campaign={campaign} key={i} index={i} />
+                  <Card campaign={campaign} key={i} index={i} />
+                  <Card campaign={campaign} key={i} index={i} />
                 </>
               ))}
             </div>

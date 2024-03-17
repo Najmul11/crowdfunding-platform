@@ -10,7 +10,7 @@ const Donate = ({ campaign, formateBigNumber }: any) => {
     if (amount > 1) setAmount(amount - 1);
   };
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 ">
       <div className="flex items-center gap-4 ">
         <Progress
           className="w-[80%]"

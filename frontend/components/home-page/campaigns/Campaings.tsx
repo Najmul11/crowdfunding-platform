@@ -7,7 +7,7 @@ export type TCampaign = (string | number | boolean)[];
 
 const Campaings = () => {
   const { contract } = useContract(
-    "0xBA69a8fcA948270b18d268e248FF53971bEC4f0E"
+    "0xB4CE25F3e5Ba6316c2b4E5d0853633785531fEb2"
   );
   const { data, isLoading, error } = useContractRead(contract, "getAllEvents");
   //   const liveCam = data?.filter((p) => p[4]);
@@ -32,8 +32,6 @@ const Campaings = () => {
             <div className="grid grid-cols-3 gap-5 ">
               {data.map((campaign: TCampaign, i: number) => (
                 <>
-                  <Card campaign={campaign} key={i} index={i} />
-                  <Card campaign={campaign} key={i} index={i} />
                   <Card campaign={campaign} key={i} index={i} />
                 </>
               ))}

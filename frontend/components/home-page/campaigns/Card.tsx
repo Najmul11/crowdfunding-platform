@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
@@ -10,6 +11,8 @@ type TProps = {
 };
 
 const Card = ({ campaign, index }: TProps) => {
+  console.log(campaign);
+
   return (
     <CardContainer className="inter-var">
       <CardBody className="bg-blue-500/30 relative group/cardw-auto  h-auto rounded-xl p-6 text-second  ">
@@ -22,10 +25,8 @@ const Card = ({ campaign, index }: TProps) => {
         </CardItem>
 
         <CardItem translateZ="100" className=" mt-4">
-          <Image
-            src={
-              "https://media.wired.com/photos/63ed133dec9575838d529957/master/pass/Cli-salinas-flood-1246184112.jpg"
-            }
+          <img
+            src={campaign[2] as string}
             height="1000"
             width="1000"
             className="h-60  object-cover rounded-xl group-hover/card:shadow-xl"

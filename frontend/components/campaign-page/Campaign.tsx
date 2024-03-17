@@ -11,7 +11,7 @@ const Campaign = () => {
   const { id } = useParams();
 
   const { contract } = useContract(
-    "0xBA69a8fcA948270b18d268e248FF53971bEC4f0E"
+    "0xB4CE25F3e5Ba6316c2b4E5d0853633785531fEb2"
   );
 
   const {
@@ -27,12 +27,13 @@ const Campaign = () => {
   return (
     <div>
       {campaign ? (
-        <div className="relative">
-          <Banner campaign={campaign} />
-
+        <div>
+          <div className="relative ">
+            <Banner campaign={campaign} />
+          </div>
           <div className="flex gap-5 pt-10 ">
             <div className="flex-1 ">
-              <div className="border border-gray-600/80 px-4 pt-10 pb-5 rounded-md z-[8]">
+              <div className="border border-gray-600/80 px-4 pt-10 pb-5 rounded-md ">
                 <Donate
                   campaign={campaign}
                   formateBigNumber={formateBigNumber}
@@ -41,8 +42,8 @@ const Campaign = () => {
             </div>
 
             <div className="flex-1">
-              <div className="border border-gray-600/80 rounded-md  p-4 pb-5 z-[8]">
-                <AllDonations campaign={campaign} />
+              <div className="border border-gray-600/80 rounded-md  p-4 pb-5 ">
+                <AllDonations id={id as string} />
               </div>
             </div>
           </div>

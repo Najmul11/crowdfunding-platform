@@ -138,6 +138,14 @@ contract CrowdFunding {
         return allEvents;
     }
 
+    function getEventDonators(uint256 eventId) public view returns (address[] memory) {
+        return events[eventId].donators;
+    }
+
+    function getEventDonations(uint256 eventId) public view returns (uint256[] memory) {
+        return events[eventId].donations;
+    }
+
     // get contract balance
     function getBalance() public view returns(uint256) {
         return address(this).balance;

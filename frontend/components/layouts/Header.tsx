@@ -3,7 +3,7 @@ import { Receipt } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="py-4 sticky top-0">
+    <header className="py-4 sticky top-0 z-[10]">
       <div className="max-w-screen-xl mx-auto p-3  rounded bg-gradient-to-r from-slate-800 to-blue-500 from-[10%] ">
         <div className="flex  justify-between items-center ">
           <Link

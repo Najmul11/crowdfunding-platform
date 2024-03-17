@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
-const Donate = ({ campaign, formateBigNumber }: any) => {
+const Donate = ({ campaign, formatBigNumber }: any) => {
   const [amount, setAmount] = useState(1);
 
   const decrement = () => {
@@ -15,12 +15,11 @@ const Donate = ({ campaign, formateBigNumber }: any) => {
         <Progress
           className="w-[80%]"
           value={
-            (formateBigNumber(campaign[6]) / formateBigNumber(campaign[5])) *
-            100
+            (formatBigNumber(campaign[6]) / formatBigNumber(campaign[5])) * 100
           }
         />
         <p className="font-semibold">
-          {formateBigNumber(campaign[6])}/{formateBigNumber(campaign[5])} MATIC
+          {formatBigNumber(campaign[6])}/{formatBigNumber(campaign[5])} MATIC
         </p>
       </div>
 

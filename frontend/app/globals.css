@@ -5,3 +5,14 @@
 .hero-shape {
   clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
 }
+
+/* Add this to your global.css or similar */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}

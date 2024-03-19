@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import { Receipt } from "lucide-react";
+import { ConnectWallet } from "@thirdweb-dev/react";
 
 const Header = () => {
   return (
@@ -20,13 +22,14 @@ const Header = () => {
             </Link>
 
             <div className="flex gap-1 items-center">
-              {/* <button className="rounded bg-blue-500/50 px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
-                Create campaign
-              </button> */}
-
               <button className="rounded bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
                 Donate now
               </button>
+
+              {/* <button className="rounded bg-blue-500/50 px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300">
+              </button> */}
+
+              <ConnectWallet className="!rounded  !font-semibold  !p-2    hover:!text-black !duration-300" />
             </div>
           </div>
         </div>

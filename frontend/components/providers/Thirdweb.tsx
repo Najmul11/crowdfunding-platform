@@ -1,7 +1,13 @@
 "use client";
 import { Mumbai } from "@thirdweb-dev/chains";
 
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+} from "@thirdweb-dev/react";
+
 import { ReactNode } from "react";
 
 const Thirdweb = ({ children }: { children: ReactNode }) => {

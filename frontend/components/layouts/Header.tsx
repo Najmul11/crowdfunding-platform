@@ -30,12 +30,19 @@ const Header = () => {
             Fund Forge
           </Link>
 
-          {address && owner && address === owner && (
+          {address && owner && address === owner ? (
             <Link
               href={"/admin"}
-              className="font-semibold rounded bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300"
+              className="rounded bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300 font-bold text-sm"
             >
               Admin
+            </Link>
+          ) : (
+            <Link
+              href={`/dashboard/${address}`}
+              className="rounded bg-black px-5 py-2 text-highlight hover:bg-highlight hover:text-black duration-300 font-bold text-sm"
+            >
+              Dashboard
             </Link>
           )}
 
